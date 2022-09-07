@@ -104,17 +104,17 @@
             }
 
             //計測中のプレイヤーを検索
-            // let f=playersStore.players.findIndex((element)=>element.isRunning==true)
-            const runningPlayer=playersStore.players.filter(element=>element.isRunning)
+            let f=playersStore.players.findIndex((element)=>element.isRunning==true)
+            // const runningPlayer=playersStore.players.filter(element=>element.isRunning)
+            // const runningCount=runningPlayer.length
 
-            const runningCount=runningPlayer.length
             //計測中のプレイヤー数により処理をする
-            // if(f==-1){stopTimer()}
-            if(runningCount==0){
-                stopTimer()
-            }else if(runningCount==1){
-                console.log('残り一人になりました')
-            }
+            if(f==-1){stopTimer()}
+            // if(runningCount==0){
+            //     stopTimer()
+            // }else if(runningCount==1){
+            //     console.log('残り一人になりました')
+            // }
         } 
     }
 
