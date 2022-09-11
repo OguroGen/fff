@@ -2,10 +2,12 @@
     import {ref,computed} from 'vue'
     import { onBeforeRouteLeave,useRouter } from 'vue-router'
     import {PlayersStore} from '@/stores/players'
+    import {SettingStore} from '@/stores/setting'
     import TimeDisplay from '@/components/TimeDisplay.vue'
     import PlayerTime from '@/components/PlayerTime.vue'
 
     const playersStore=PlayersStore()
+    const settingStore=SettingStore()
     const router=useRouter()
     const pushSound = new Audio('./sounds/digital.mp3')
     const yooiSound = new Audio('./sounds/yooi.wav')
@@ -13,7 +15,7 @@
     const time=ref(0)
     const startButton=ref(null)
 
-    let startTime,displayTime,yooiDelay,ranking
+    let startTime,displayTime,yooiDelay,lastplayerTime,ranking
 
     //ユーザー数が６人以上の場合は二列にする
     const playersCol=computed(()=>{
@@ -22,7 +24,7 @@
 
     //スタートボタンの見た目を変更
     const startButtonClass=computed(()=>{
-        switch(playersStore.startButtonCaption){
+        switch(settingStore.startButtonCaption){
             case'START':
                 return 'btn-primary'
                 break
@@ -39,10 +41,9 @@
     const start=()=>{
     startButton.value.blur()
 
-    if(playersStore.startButtonCaption=='START'){      //スタート処理
+    if(settingStore.startButtonCaption=='START'){      //スタート処理
         
-        yooiSound.currentTime = 0
-        yooiSound.play()
+        makeSound(yooiSound)
         time.value='よーい'
         
         yooiDelay=setTimeout(()=>{
@@ -50,8 +51,7 @@
             displayTime = setInterval(() => {                   
                 time.value = calculateTime()
             },5)
-            hajimeSound.currentTime = 0
-            hajimeSound.play();           
+            makeSound(hajimeSound)        
         },1600)
 
         playersStore.players.forEach(e => {
@@ -62,13 +62,14 @@
 
         ranking = 1
 
-        playersStore.startButtonCaption='STOP'
+        settingStore.startButtonCaption='STOP'
 
-    } else if(playersStore.startButtonCaption=='STOP'){  //ストップ処理
+    } else if(settingStore.startButtonCaption=='STOP'){  //ストップ処理
         stopTimer();
+
     } else {                                      //リセット処理
         time.value=0
-        playersStore.startButtonCaption='START'
+        settingStore.startButtonCaption='START'
         
         playersStore.initialize()
     }
@@ -80,7 +81,7 @@
         clearInterval(displayTime)
         displayTime=false
         time.value='終了';
-        playersStore.startButtonCaption='RESET'
+        settingStore.startButtonCaption='RESET'
     }
 
     //タイムの計算
@@ -91,31 +92,47 @@
 
     //キーが押された時
     const onKeyDown=(e)=>{
-        if(displayTime){
-        
-            let i=playersStore.players.findIndex((element)=>element.ck==e.code)
-            
-            if(i!=-1 && playersStore.players[i].isRunning==true){
-                playersStore.players[i].time = calculateTime()
-                pushSound.currentTime = 0
-                pushSound.play()
-                playersStore.players[i].isRunning = false
-                playersStore.players[i].timeRank = ranking++
-            }
-
-            //計測中のプレイヤーを検索
-            let f=playersStore.players.findIndex((element)=>element.isRunning==true)
-            // const runningPlayer=playersStore.players.filter(element=>element.isRunning)
-            // const runningCount=runningPlayer.length
-
-            //計測中のプレイヤー数により処理をする
-            if(f==-1){stopTimer()}
-            // if(runningCount==0){
-            //     stopTimer()
-            // }else if(runningCount==1){
-            //     console.log('残り一人になりました')
-            // }
+        if(displayTime){        
+            const i=playersStore.players.findIndex((element)=>element.ck==e.code)
+            if(i!=-1){stopPlayerTimer(i)}        
         } 
+    }
+
+    //選手のタイマーを止める
+    const stopPlayerTimer=(i)=>{
+        const players=playersStore.players
+
+        if(players[i].isRunning==true){
+            players[i].time = calculateTime()
+            makeSound(pushSound)
+            players[i].isRunning = false
+            players[i].timeRank = ranking++
+
+            //計測中のプレイヤーを数える
+            countPlayer()
+        }           
+    }
+
+    //選手が終わった時の処理
+    const countPlayer=()=>{
+        //計測中のプレイヤーを検索
+        const runningPlayer=playersStore.players.filter(element=>element.isRunning)
+        const runningCount=runningPlayer.length
+
+        //計測中のプレイヤー数により処理をする
+        if(runningCount==0){
+            stopTimer()
+        }else if(runningCount==1&&!runningPlayer[0].isLastPlayer){
+            console.log('残り一人になりました')
+            runningPlayer[0].isLastPlayer=true
+            runningPlayer[0].time=5
+        }
+    }
+
+    //音を鳴らす
+    const makeSound=(sound)=>{
+        sound.currentTime = 0
+        sound.play();    
     }
 
     //前のページへ
@@ -139,14 +156,14 @@
 
 <template>
     <header class="row">
-        <button class="btn btn-outline-info col-1" @click="prev" :disabled="playersStore.startButtonCaption=='STOP'">《　選手情報</button>
-        <button class="btn btn-outline-info col-1 offset-10" @click="next" :disabled="playersStore.startButtonCaption=='STOP'">得点入力　》</button>
+        <button class="btn btn-outline-info col-1" @click="prev" :disabled="settingStore.startButtonCaption=='STOP'">《　選手情報</button>
+        <button class="btn btn-outline-info col-1 offset-10" @click="next" :disabled="settingStore.startButtonCaption=='STOP'">得点入力　》</button>
     </header>
     <TimeDisplay :time="time" />
     <div :class="playersCol">
         <PlayerTime :player="player" v-for="player in playersStore.players"/>
     </div>
-    <button id="startButton" ref="startButton" class="btn btn-lg py-3 px-5" :class="startButtonClass" @click="start()">{{playersStore.startButtonCaption}}</button>
+    <button id="startButton" ref="startButton" class="btn btn-lg py-3 px-5" :class="startButtonClass" @click="start()">{{settingStore.startButtonCaption}}</button>
 </template>
 
 <style scoped>
@@ -155,6 +172,5 @@
         margin: 0 auto;
         margin-top:30px;
     }
-    
 
 </style>

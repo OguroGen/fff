@@ -3,18 +3,17 @@ import { defineStore } from 'pinia'
 export const PlayersStore = defineStore('PlayersStore',{
   state: () => ({
     players_master:[
-      {ck:'KeyA',name:'userA',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true},
-      {ck:'KeyB',name:'userB',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true},
-      {ck:'KeyC',name:'userC',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true},
-      {ck:'KeyD',name:'userD',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true},
-      {ck:'KeyE',name:'userE',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true},
-      {ck:'KeyF',name:'userF',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false},
-      {ck:'KeyG',name:'userG',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false},
-      {ck:'KeyH',name:'userH',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false},
-      {ck:'KeyI',name:'userI',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false},
-      {ck:'KeyJ',name:'userJ',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false}
-    ],
-    startButtonCaption:'START'
+      {ck:'KeyA',name:'userA',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true,isLastPlayer:false},
+      {ck:'KeyB',name:'userB',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true,isLastPlayer:false},
+      {ck:'KeyC',name:'userC',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true,isLastPlayer:false},
+      {ck:'KeyD',name:'userD',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true,isLastPlayer:false},
+      {ck:'KeyE',name:'userE',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true,isLastPlayer:false},
+      {ck:'KeyF',name:'userF',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false,isLastPlayer:false},
+      {ck:'KeyG',name:'userG',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false,isLastPlayer:false},
+      {ck:'KeyH',name:'userH',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false,isLastPlayer:false},
+      {ck:'KeyI',name:'userI',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false,isLastPlayer:false},
+      {ck:'KeyJ',name:'userJ',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false,isLastPlayer:false}
+    ]
   }),
   getters: {
     players(){
@@ -36,6 +35,7 @@ export const PlayersStore = defineStore('PlayersStore',{
         e.point=''
         e.rank=''
         e.isRunning=false
+        e.isLastPlayer=false
       })
     }
   }
