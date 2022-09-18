@@ -9,13 +9,18 @@
     const playersStore=PlayersStore()
     const settingStore=SettingStore()
     const router=useRouter()
+
     const pushSound = new Audio('./sounds/digital.mp3')
     const yooiSound = new Audio('./sounds/yooi.wav')
     const hajimeSound = new Audio('./sounds/hajime.wav')
+    const yameSound = new Audio('./sounds/yame.wav')
+
     const time=ref(0)
     const startButton=ref(null)
 
-    let startTime,displayTime,yooiDelay,lastplayerTime,ranking
+    const lastLimitTime=settingStore.lastLimitTime*1000
+
+    let startTime,displayTime,yooiDelay,lastTime,ranking
 
     //ユーザー数が６人以上の場合は二列にする
     const playersCol=computed(()=>{
@@ -79,6 +84,7 @@
     const stopTimer=()=>{
         clearTimeout(yooiDelay)
         clearInterval(displayTime)
+        clearInterval(lastTime)
         displayTime=false
         time.value='終了';
         settingStore.startButtonCaption='RESET'
@@ -86,7 +92,7 @@
 
     //タイムの計算
     const calculateTime=()=>{
-        let t = new Date();
+        let t = new Date()
         return(((t - startTime)/1000).toFixed(3));
     }
 
@@ -107,7 +113,7 @@
             makeSound(pushSound)
             players[i].isRunning = false
             players[i].timeRank = ranking++
-
+            players[i].isLastPlayer=false
             //計測中のプレイヤーを数える
             countPlayer()
         }           
@@ -122,10 +128,23 @@
         //計測中のプレイヤー数により処理をする
         if(runningCount==0){
             stopTimer()
-        }else if(runningCount==1&&!runningPlayer[0].isLastPlayer){
-            console.log('残り一人になりました')
-            runningPlayer[0].isLastPlayer=true
-            runningPlayer[0].time=5
+        }else if(runningCount==1&&!runningPlayer[0].isLastPlayer&&settingStore.lastPlayerCountdown){
+            const lastPlayer=runningPlayer[0]
+            
+            lastPlayer.isLastPlayer=true
+
+            const t= new Date()
+
+            lastTime=setInterval(()=>{
+                let nowTime=new Date()
+                let countDownTime=t-nowTime+lastLimitTime
+                lastPlayer.time=(countDownTime/1000).toFixed(1)
+                if(countDownTime<0){
+                    lastPlayer.time=calculateTime()
+                    makeSound(yameSound)
+                    stopTimer()
+                }
+            },10)
         }
     }
 

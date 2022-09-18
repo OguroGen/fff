@@ -27,7 +27,7 @@
     color:darkslategray;
   }
   .lastPlayer{
-    background-color:pink;
+    background-color:mistyrose;
     color:red;
   }
 </style>
