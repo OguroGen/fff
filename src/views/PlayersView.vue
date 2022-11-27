@@ -10,11 +10,22 @@
     const next=()=>{
         router.push('/time')
     }
+
+    //個別ストップウォッチへ
+    const goToIndividual=()=>{
+        playersStore.initialize()
+        router.push('/stopwatch')
+    }
+
+    //個別タイマーへ
+    const goToTimer=()=>{
+        router.push('/personaltimer')
+    }
 </script>
 
 <template>
     <header class="row">
-        <button class="btn btn-outline-info col-1 offset-11" @click="next">時間計測　》</button>
+        <button class="btn btn-outline-info col-2 offset-10" @click="next">時間計測　》</button>
     </header>
     <h2>選手情報</h2>
     <div class="row">
@@ -33,7 +44,7 @@
                     <tr v-for="player in playersStore.players_master">
                         <th v-text="player.ck" style="padding: 10px"></th>
                         <td>
-                            <input class="form-control" type="text" maxlength="7" v-model="player.name" style="width:170px" :disabled="!player.available">
+                            <input class="form-control" type="text" maxlength="8" v-model="player.name" style="width:170px" :disabled="!player.available">
                         </td>
                         <td>
                             <input class="form-control" type="text" maxlength="3" v-model="player.grade" style="width:100px" :disabled="!player.available">
@@ -46,7 +57,7 @@
                 </tbody>
             </table>
             <p>
-                選手名：７文字以内　（必須）<br/>
+                選手名：８文字以内　（必須）<br/>
                 学　年：３文字以内　（任意）<br/>
                 所　属：６文字以内　（任意）
             </p>
@@ -57,9 +68,9 @@
                 <input type="checkbox" class="form-check-input" role="switch" v-model="settingStore.lastPlayerCountdown">
                 <span class="ms-3" :class="{light:!settingStore.lastPlayerCountdown}">最後の選手は<input type="number" v-model="settingStore.lastLimitTime" style="width:60px;text-align:center" :disabled="!settingStore.lastPlayerCountdown">秒後に終了</span>
             </div>
-            <h3>個別モード</h3>
-            <button class="btn btn-outline-primary">個別ストップウォッチ</button>
-            <button class="btn btn-outline-primary">個別タイマー</button>
+            <h3 class="mt-5">個別モード</h3>
+            <div class="mb-3"><button class="btn btn-outline-info py-2" style="width:250px" @click="goToIndividual">個別ストップウォッチ　》</button></div>
+            <div class="mb-3"><button class="btn btn-outline-info py-2" style="width:250px" @click="goToTimer">個別タイマー　》</button></div>
         </div>
     </div>
 </template>
@@ -72,7 +83,8 @@
         min-width:620px;
     }
     h3{
-        margin:30px 0 20px;
+        color:darkslategray;
+        margin:0 0 20px;
         border-bottom: 2px solid;
         width:400px;
     }

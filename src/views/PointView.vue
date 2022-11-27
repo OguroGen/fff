@@ -21,8 +21,8 @@
 
 <template>
   <header class="row">
-      <button class="btn btn-outline-info col-1" @click="prev">《　時間計測</button>
-      <button class="btn btn-outline-info col-1 offset-10" @click="next">順位発表　》</button>
+      <button class="btn btn-outline-info col-2" @click="prev">《　時間計測</button>
+      <button class="btn btn-outline-info col-2 offset-8" @click="next">順位発表　》</button>
   </header>
   <h2>点数入力</h2>
   <div class="m-5" v-if="!inputShow">

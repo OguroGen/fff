@@ -175,8 +175,8 @@
 
 <template>
     <header class="row">
-        <button class="btn btn-outline-info col-1" @click="prev" :disabled="settingStore.startButtonCaption=='STOP'">《　選手情報</button>
-        <button class="btn btn-outline-info col-1 offset-10" @click="next" :disabled="settingStore.startButtonCaption=='STOP'">得点入力　》</button>
+        <button class="btn btn-outline-info col-2" @click="prev" :disabled="settingStore.startButtonCaption=='STOP'">《　選手情報</button>
+        <button class="btn btn-outline-info col-2 offset-8" @click="next" :disabled="settingStore.startButtonCaption=='STOP'">得点入力　》</button>
     </header>
     <TimeDisplay :time="time" />
     <div :class="playersCol">

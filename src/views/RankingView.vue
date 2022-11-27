@@ -70,9 +70,9 @@
         </div>
         
         <div class="row">
-            <button class="btn btn-outline-info col-1" @click="prev">《　得点入力</button>
-            <button class="btn btn-outline-primary btn-lg col-2 offset-4" @click="nextRankShow">次を表示</button>
-            <button class="btn btn-outline-danger col-1 offset-4" @click="next">選手情報</button>
+            <button class="btn btn-outline-info col-2" @click="prev">《　得点入力</button>
+            <button class="btn btn-outline-primary btn-lg col-2 offset-3" @click="nextRankShow">次を表示</button>
+            <button class="btn btn-outline-danger col-2 offset-3" @click="next">選手情報</button>
         </div>
     </div>
 </template>

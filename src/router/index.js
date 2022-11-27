@@ -30,9 +30,14 @@ const router = createRouter({
       component: () => import('../views/RankingView.vue')
     },
     {
-      path: '/setting',
-      name: 'setting',
-      component: () => import('../views/SettingView.vue')
+      path: '/stopwatch',
+      name: 'stopwatch',
+      component: () => import('../views/StopWatchView.vue')
+    },
+    {
+      path: '/personaltimer',
+      name: 'personaltimer',
+      component: () => import('../views/PersonalTimerView.vue')
     }
   ]
 })

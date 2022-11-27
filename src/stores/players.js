@@ -3,16 +3,16 @@ import { defineStore } from 'pinia'
 export const PlayersStore = defineStore('PlayersStore',{
   state: () => ({
     players_master:[
-      {ck:'KeyA',name:'userA',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true,isLastPlayer:false},
-      {ck:'KeyB',name:'userB',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true,isLastPlayer:false},
-      {ck:'KeyC',name:'userC',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true,isLastPlayer:false},
-      {ck:'KeyD',name:'userD',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true,isLastPlayer:false},
-      {ck:'KeyE',name:'userE',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true,isLastPlayer:false},
-      {ck:'KeyF',name:'userF',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false,isLastPlayer:false},
-      {ck:'KeyG',name:'userG',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false,isLastPlayer:false},
-      {ck:'KeyH',name:'userH',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false,isLastPlayer:false},
-      {ck:'KeyI',name:'userI',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false,isLastPlayer:false},
-      {ck:'KeyJ',name:'userJ',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false,isLastPlayer:false}
+      {ck:'KeyA',name:'選手A',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true,isLastPlayer:false,limitMin:5,limitSec:0},
+      {ck:'KeyB',name:'選手B',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true,isLastPlayer:false,limitMin:5,limitSec:0},
+      {ck:'KeyC',name:'選手C',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true,isLastPlayer:false,limitMin:5,limitSec:0},
+      {ck:'KeyD',name:'選手D',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true,isLastPlayer:false,limitMin:5,limitSec:0},
+      {ck:'KeyE',name:'選手E',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:true,isLastPlayer:false,limitMin:5,limitSec:0},
+      {ck:'KeyF',name:'選手F',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false,isLastPlayer:false,limitMin:5,limitSec:0},
+      {ck:'KeyG',name:'選手G',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false,isLastPlayer:false,limitMin:5,limitSec:0},
+      {ck:'KeyH',name:'選手H',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false,isLastPlayer:false,limitMin:5,limitSec:0},
+      {ck:'KeyI',name:'選手I',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false,isLastPlayer:false,limitMin:5,limitSec:0},
+      {ck:'KeyJ',name:'選手J',grade:'',school:'',time:'',timeRank:'',point:'',rank:'',isRunning:false,available:false,isLastPlayer:false,limitMin:5,limitSec:0}
     ]
   }),
   getters: {
