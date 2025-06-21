@@ -1,29 +1,71 @@
-# fff
+# 早押しアプリ (fff)
 
-This template should help get you started developing with Vue 3 in Vite.
+競技クイズや早押しクイズの計測・管理を行うWebアプリケーションです。
 
-## Recommended IDE Setup
+## 🎯 特徴
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- **複数選手対応**: 最大10名まで同時計測可能（A～Jキー）
+- **音声機能**: 「よーい」「はじめ」「やめ」の音声案内
+- **タイム計測**: 高精度なタイム計測とランキング表示
+- **得点入力**: 得点による総合ランキング機能
+- **個別モード**: ストップウォッチ・タイマーの個別使用
+- **プロジェクター対応**: 大画面での表示に最適化
 
-## Customize configuration
+## 🚀 技術スタック
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- Vue 3 (Composition API)
+- Vite
+- Pinia (状態管理)
+- Vue Router
+- Bootstrap 5
+- Web Speech API
 
-## Project Setup
+## 📦 インストール
 
-```sh
+```bash
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+## 🛠️ 開発
 
-```sh
+```bash
 npm run dev
 ```
 
-### Compile and Minify for Production
+## 🏗️ ビルド
 
-```sh
+```bash
 npm run build
 ```
+
+## 🎮 使用方法
+
+1. **スタート**ボタンでアプリを開始
+2. **選手情報**で参加者の名前と設定を入力
+3. **時間計測**でキーボード（A～J）による早押し計測
+4. **得点入力**で各選手の得点を入力
+5. **順位発表**でアニメーション付きの結果表示
+
+## ⚙️ 機能
+
+### メイン機能
+- 早押しタイム計測
+- 順位発表画面
+- 得点管理システム
+
+### オプション機能
+- 最後の選手の自動終了設定
+- 制限時間設定
+- サイレントモード
+
+### 個別モード
+- 個別ストップウォッチ
+- 個別タイマー（カウントダウン）
+
+## 📝 ライセンス
+
+MIT License
+
+## 👤 作者
+
+小黒元 (OguroGen)
