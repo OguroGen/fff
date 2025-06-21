@@ -1,0 +1,47 @@
+# SPA (Single Page Application) のルーティング対応
+# 全てのリクエストを index.html にリダイレクト
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  
+  # 実際のファイルやディレクトリが存在しない場合
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  
+  # index.html にリダイレクト
+  RewriteRule ^.*$ /fff/index.html [L]
+</IfModule>
+
+# キャッシュ設定
+<IfModule mod_expires.c>
+  ExpiresActive on
+  
+  # HTML ファイルはキャッシュしない（更新を即座に反映）
+  ExpiresByType text/html "access plus 0 seconds"
+  
+  # JavaScript/CSS は1週間キャッシュ
+  ExpiresByType application/javascript "access plus 1 week"
+  ExpiresByType text/css "access plus 1 week"
+  
+  # 画像ファイルは1ヶ月キャッシュ
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/jpg "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/gif "access plus 1 month"
+  
+  # 音声ファイルは1ヶ月キャッシュ
+  ExpiresByType audio/mpeg "access plus 1 month"
+  ExpiresByType audio/wav "access plus 1 month"
+</IfModule>
+
+# セキュリティヘッダー
+<IfModule mod_headers.c>
+  # XSS保護
+  Header always set X-Content-Type-Options nosniff
+  Header always set X-Frame-Options DENY
+  Header always set X-XSS-Protection "1; mode=block"
+  
+  # HTTPS強制（HTTPSサイトの場合のみ有効化）
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>

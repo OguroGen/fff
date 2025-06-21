@@ -11,5 +11,13 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  base: process.env.VERCEL ? '/' : '/fff/'
+  base: process.env.VERCEL ? '/' : '/fff/',
+  server: {
+    // 開発環境でのSPAルーティング対応
+    historyApiFallback: true
+  },
+  preview: {
+    // previewモードでのSPAルーティング対応
+    historyApiFallback: true
+  }
 })

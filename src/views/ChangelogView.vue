@@ -1,23 +1,136 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { changelog, changeTypeConfig } from '@/data/changelog.js'
+import packageJson from '../../package.json'
+
+// 標準的なCHANGELOG.mdに基づく更新履歴データ
+const changelog = [
+  {
+    version: "0.9.0",
+    date: "2025-06-21",
+    title: "更新履歴機能とバージョン管理システムの追加",
+    changes: {
+      added: [
+        "更新履歴表示ページ(/changelog)の追加",
+        "ホーム画面にバージョンバッジを追加", 
+        "タイムライン形式の見やすい更新履歴機能",
+        "変更タイプ別のアイコンと色分け表示",
+        "更新履歴データ管理システム(changelog.js)"
+      ],
+      changed: [
+        "package.jsonのバージョンを0.9.0に更新",
+        "ルーターに/changelogパスを追加"
+      ],
+      fixed: [
+        "SPAルーティングの問題を修正（URL直接アクセス時の404エラーを解決）",
+        "Vite設定にhistoryApiFallbackを追加",
+        "本番環境用.htaccessファイルを追加",
+        "Vercel用vercel.json設定ファイルを追加"
+      ]
+    }
+  },
+  {
+    version: "0.8.0",
+    date: "2025-06-21",
+    title: "包括的なアップデート: ドキュメント・環境・コード改善",
+    changes: {
+      added: [
+        "包括的なREADME.mdの追加",
+        "Vercel自動デプロイ環境の構築",
+        "技術スタック情報とデプロイ方法の詳細説明",
+        "ファビコン追加: 稲妻デザインのSVGファビコン"
+      ],
+      changed: [
+        "Vite設定: Vercel/本番環境の自動切り替え対応",
+        "Vue 3 Composition API規則への対応",
+        "コード品質の向上と命名規則の統一"
+      ]
+    }
+  },
+  {
+    version: "0.7.0",
+    date: "2022-11-27",
+    title: "個人タイマー機能の追加",
+    changes: {
+      added: [
+        "個人タイマー機能の実装",
+        "PersonalTimerView.vueの追加",
+        "個別練習モードの導入"
+      ]
+    }
+  },
+  {
+    version: "0.6.0",
+    date: "2022-09-18",
+    title: "カウントダウン機能とタイマー改善",
+    changes: {
+      added: [
+        "最後の選手のカウントダウン機能"
+      ],
+      changed: [
+        "タイマー停止機能の改善"
+      ]
+    }
+  },
+  {
+    version: "0.5.0",
+    date: "2022-09-11",
+    title: "音響機能の実装",
+    changes: {
+      added: [
+        "makeSound()関数の実装",
+        "stopPlayerTimer()関数の実装"
+      ],
+      changed: [
+        "音響効果の改善"
+      ]
+    }
+  },
+  {
+    version: "0.1.0",
+    date: "2022-09-07",
+    title: "初回リリース",
+    changes: {
+      added: [
+        "基本的な早押しクイズ機能",
+        "選手登録機能",
+        "時間計測機能",
+        "得点入力機能",
+        "成績発表機能",
+        "ストップウォッチ機能"
+      ]
+    }
+  }
+]
 
 const router = useRouter()
+const currentVersion = packageJson.version
 
 const goBack = () => {
   router.push('/')
 }
 
 const getChangeIcon = (type) => {
-  return changeTypeConfig[type]?.icon || "📄"
+  const icons = {
+    added: "🆕",
+    changed: "🔧", 
+    fixed: "🐛",
+    removed: "🗑️"
+  }
+  return icons[type] || "📄"
 }
 
 const getChangeClass = (type) => {
-  return changeTypeConfig[type]?.class || "change-default"
+  return `change-${type}`
 }
 
 const getChangeLabel = (type) => {
-  return changeTypeConfig[type]?.label || "変更"
+  const labels = {
+    added: "新機能",
+    changed: "変更",
+    fixed: "修正",
+    removed: "削除"
+  }
+  return labels[type] || "変更"
 }
 </script>
 
@@ -52,16 +165,18 @@ const getChangeLabel = (type) => {
 
         <!-- 変更内容 -->
         <div class="changes-list">
-          <div 
-            v-for="(change, index) in release.changes"
-            :key="index"
-            class="change-item"
-            :class="getChangeClass(change.type)"
-          >
-            <span class="change-icon">{{ getChangeIcon(change.type) }}</span>
-            <span class="change-type">{{ getChangeLabel(change.type) }}</span>
-            <span class="change-text">{{ change.text }}</span>
-          </div>
+          <template v-for="(changeList, changeType) in release.changes" :key="changeType">
+            <div 
+              v-for="(change, index) in changeList"
+              :key="`${changeType}-${index}`"
+              class="change-item"
+              :class="getChangeClass(changeType)"
+            >
+              <span class="change-icon">{{ getChangeIcon(changeType) }}</span>
+              <span class="change-type">{{ getChangeLabel(changeType) }}</span>
+              <span class="change-text">{{ change }}</span>
+            </div>
+          </template>
         </div>
       </div>
     </div>
@@ -189,7 +304,7 @@ const getChangeLabel = (type) => {
   border-left: 3px solid #27ae60;
 }
 
-.change-improved {
+.change-changed {
   background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
   border-left: 3px solid #f39c12;
 }

@@ -1,6 +1,9 @@
 <script setup>
     import { useRouter } from 'vue-router'
+    import packageJson from '../../package.json'
+    
     const router = useRouter()
+    const appVersion = packageJson.version
 
     const start = () => {
         document.body.requestFullscreen()
@@ -16,7 +19,7 @@
   <div class="home-container">
     <!-- バージョン情報バッジ -->
     <div class="version-badge" @click="goToChangelog">
-      <span class="version-text">v0.9.0</span>
+      <span class="version-text">v{{ appVersion }}</span>
       <span class="changelog-icon">📋</span>
     </div>
     
