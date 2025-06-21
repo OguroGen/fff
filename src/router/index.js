@@ -38,6 +38,11 @@ const router = createRouter({
       path: '/personaltimer',
       name: 'personaltimer',
       component: () => import('../views/PersonalTimerView.vue')
+    },
+    {
+      path: '/changelog',
+      name: 'changelog',
+      component: () => import('../views/ChangelogView.vue')
     }
   ]
 })

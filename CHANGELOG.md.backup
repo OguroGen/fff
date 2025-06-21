@@ -1,0 +1,72 @@
+# 早押しクイズアプリ (fff) - 変更履歴
+
+## Version 1.1.0 リリース内容
+
+### 🎉 新機能
+- **新しい成績発表ページ** (`RankingView2.vue`)
+  - モダンなUI/UXデザイン
+  - 自動再生機能
+  - プログレス表示
+  - 全選手一括表示機能
+  - リセット機能
+  - レスポンシブ対応
+
+### 🔧 リファクタリング
+- **HomeView.vue** の全面リニューアル
+  - バージョン情報表示
+  - クイックアクセスボタン
+  - 個別ツールへのリンク
+  - モダンなグラデーションデザイン
+
+- **TimeDisplay.vue** コンポーネント改善
+  - Props型定義の追加
+  - レスポンシブ対応
+  - コードクリーンアップ
+
+- **PersonalTimer.vue** コンポーネント改善
+  - Props検証の追加
+  - UI/UXの向上
+  - 計算プロパティの命名改善
+
+### 🛣️ ナビゲーション改善
+- **PointView.vue**: 新旧成績発表ページへの選択肢を追加
+- **RankingView.vue**: 新版へのリンクボタンを追加
+- **router/index.js**: 新しいルート `/ranking2` を追加
+
+### 📦 バージョン管理
+- package.json のバージョンを `0.0.0` → `1.1.0` に更新
+
+### 🎨 デザイン改善
+- 統一されたカラーパレット
+- ホバーエフェクト
+- モダンなボタンデザイン
+- より良いタイポグラフィ
+
+### 🔄 互換性
+- 旧版の成績発表ページは完全に保持
+- 既存の機能はすべて維持
+- 既存のワークフローに影響なし
+
+---
+
+## ファイル変更履歴
+
+### 新規作成
+- `src/views/RankingView2.vue` - 新しい成績発表ページ
+
+### 変更されたファイル
+- `package.json` - バージョン更新
+- `src/router/index.js` - 新ルート追加
+- `src/views/HomeView.vue` - 全面リニューアル
+- `src/views/PointView.vue` - ナビゲーション改善
+- `src/views/RankingView.vue` - 新版へのリンク追加
+- `src/components/TimeDisplay.vue` - Props改善とレスポンシブ対応
+- `src/components/PersonalTimer.vue` - UI/UX改善
+
+### デプロイメント
+- 開発環境（Vercel）: 自動デプロイ
+- 本番環境（anzan.online）: `npm run build` でビルド後アップロード要
+
+---
+
+*Version 1.1.0 - 2025年1月*
