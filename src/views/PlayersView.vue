@@ -68,6 +68,14 @@
                 <input type="checkbox" class="form-check-input" role="switch" v-model="settingStore.lastPlayerCountdown">
                 <span class="ms-3" :class="{light:!settingStore.lastPlayerCountdown}">最後の選手は<input type="number" v-model="settingStore.lastLimitTime" style="width:60px;text-align:center" :disabled="!settingStore.lastPlayerCountdown">秒後に終了</span>
             </div>
+            <div class="form-check form-switch">
+                <input type="checkbox" class="form-check-input" role="switch" v-model="settingStore.silentMode">
+                <span class="ms-3" :class="{light:!settingStore.silentMode}">「よーい、はじめ」の声を出さない</span>
+            </div>
+            <div class="form-check form-switch">
+                <input type="checkbox" class="form-check-input" role="switch" v-model="settingStore.limitMode">
+                <span class="ms-3" :class="{light:!settingStore.limitMode}">制限時間を<input type="number" min="0" v-model="settingStore.limitMin" style="width:60px;text-align:center" :disabled="!settingStore.limitMode">分<input type="number" max="59" min="0" v-model="settingStore.limitSec" style="width:60px;text-align:center" :disabled="!settingStore.limitMode">秒に設定する</span>
+            </div>
             <h3 class="mt-5">個別モード</h3>
             <div class="mb-3"><button class="btn btn-outline-info py-2" style="width:250px" @click="goToIndividual">個別ストップウォッチ　》</button></div>
             <div class="mb-3"><button class="btn btn-outline-info py-2" style="width:250px" @click="goToTimer">個別タイマー　》</button></div>

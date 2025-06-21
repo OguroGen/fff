@@ -19,6 +19,10 @@
     const startButton=ref(null)
 
     const lastLimitTime=settingStore.lastLimitTime*1000
+    const silentMode=settingStore.silentMode;
+    const limitMode=ref(settingStore.limitMode);
+    const limitMin=ref(settingStore.limitMin);
+    const limitSec=ref(settingStore.limitSec);
 
     let startTime,displayTime,yooiDelay,lastTime,ranking
 
@@ -47,17 +51,21 @@
     startButton.value.blur()
 
     if(settingStore.startButtonCaption=='START'){      //スタート処理
-        
-        makeSound(yooiSound)
-        time.value='よーい'
+        let delayTime=0
+
+        if(!silentMode){
+            makeSound(yooiSound);
+            time.value='よーい';
+            delayTime=1600;
+        }
         
         yooiDelay=setTimeout(()=>{
             startTime = new Date()
             displayTime = setInterval(() => {                   
                 time.value = calculateTime()
             },5)
-            makeSound(hajimeSound)        
-        },1600)
+            if(!silentMode)makeSound(hajimeSound);        
+        },delayTime)
 
         playersStore.players.forEach(e => {
             e.isRunning=true;
@@ -176,8 +184,12 @@
 <template>
     <header class="row">
         <button class="btn btn-outline-info col-2" @click="prev" :disabled="settingStore.startButtonCaption=='STOP'">《　選手情報</button>
-        <button class="btn btn-outline-info col-2 offset-8" @click="next" :disabled="settingStore.startButtonCaption=='STOP'">得点入力　》</button>
+        <div class="col-8">
+            <div class="limitTime" v-if="limitMode">制限時間{{ limitMin }}分{{ limitSec }}秒</div>
+        </div>
+        <button class="btn btn-outline-info col-2" @click="next" :disabled="settingStore.startButtonCaption=='STOP'">得点入力　》</button>
     </header>
+    
     <TimeDisplay :time="time" />
     <div :class="playersCol">
         <PlayerTime :player="player" v-for="player in playersStore.players"/>
@@ -190,6 +202,12 @@
         display:block;
         margin: 0 auto;
         margin-top:30px;
+    }
+
+    .limitTime{
+        text-align: center;
+        font-size: 1.6rem;
+        color: brown;
     }
 
 </style>
