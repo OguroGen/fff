@@ -18,7 +18,7 @@
     <h3 class="card-title" v-text="player.name"></h3>
     <div class="card-text display-3" v-text="player.time" :class="{lastPlayer:player.isLastPlayer}"></div>
     <div class="card-text display-5" v-text="rankText" :class="{lastPlayer:player.isLastPlayer}"></div>
-    <div class="card-text text-end text-secondary" style="margin-bottom:-20px" v-text="player.ck"></div>
+    <div class="card-text text-end text-secondary" style="margin-bottom:-20px" v-text="player.keyCode"></div>
   </div>
 </template>
 

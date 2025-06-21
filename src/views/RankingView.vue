@@ -1,9 +1,9 @@
 <script setup>
     import {ref,computed} from 'vue'
-    import {PlayersStore} from '@/stores/players'
+    import {usePlayersStore} from '@/stores/playersStore'
     import { useRouter } from 'vue-router'
 
-    const playersStore=PlayersStore()
+    const playersStore=usePlayersStore()
     const router=useRouter()
     const nameFlag=ref(Array(10))
     const infoFlag=ref(Array(10))
@@ -13,7 +13,7 @@
     let rank=99
 
     const hrStyle=computed(()=>{
-        let mg=40-(playersStore.players_ranked.length*5)
+        let mg=40-(playersStore.playersRanked.length*5)
         let mgString=mg+'px'
         return {'margin-top':mgString,'margin-bottom':mgString}
     })
@@ -24,7 +24,7 @@
 
     //次の順位を表示
     const nextRankShow=()=>{
-        if(rank==99){rank=playersStore.players_ranked.length}
+        if(rank==99){rank=playersStore.playersRanked.length}
         if(rank>0){
             infoFlag.value[rank]=true
             nameFlag.value[--rank]=true
@@ -53,7 +53,7 @@
 
 <template>
     <div class="wrap">
-        <div v-for="(player,i) in playersStore.players_ranked">
+        <div v-for="(player,i) in playersStore.playersRanked">
             <span :class="i==0?'rank1':'rank'" v-text="i+1+'位'"></span>
             <transition name="name-show" @after-enter="infoShow(i)">
                 <span :class="i==0?'name1':'name'" v-text="player.name" v-show="nameFlag[i]"></span>

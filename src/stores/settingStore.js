@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const SettingStore = defineStore('SettingStore',{
+export const useSettingStore = defineStore('SettingStore',{
   state: () => ({
     startButtonCaption:'START',
     lastPlayerCountdown:false,

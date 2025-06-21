@@ -1,9 +1,9 @@
 <script setup>
-    import {PlayersStore} from '@/stores/players'
-    import {SettingStore} from '@/stores/setting'
+    import {usePlayersStore} from '@/stores/playersStore'
+    import {useSettingStore} from '@/stores/settingStore'
     import { useRouter } from 'vue-router'
-    const playersStore=PlayersStore()
-    const settingStore=SettingStore()
+    const playersStore=usePlayersStore()
+    const settingStore=useSettingStore()
     const router=useRouter()
 
     //次のページへ
@@ -12,13 +12,13 @@
     }
 
     //個別ストップウォッチへ
-    const goToIndividual=()=>{
+    const goToIndividualStopwatch=()=>{
         playersStore.initialize()
         router.push('/stopwatch')
     }
 
     //個別タイマーへ
-    const goToTimer=()=>{
+    const goToPersonalTimer=()=>{
         router.push('/personaltimer')
     }
 </script>
@@ -41,8 +41,8 @@
                     </tr>
                 </thead>
                 <tbody class="text-center">
-                    <tr v-for="player in playersStore.players_master">
-                        <th v-text="player.ck" style="padding: 10px"></th>
+                    <tr v-for="player in playersStore.playersMaster">
+                        <th v-text="player.keyCode" style="padding: 10px"></th>
                         <td>
                             <input class="form-control" type="text" maxlength="8" v-model="player.name" style="width:170px" :disabled="!player.available">
                         </td>
@@ -77,8 +77,8 @@
                 <span class="ms-3" :class="{light:!settingStore.limitMode}">制限時間を<input type="number" min="0" v-model="settingStore.limitMin" style="width:60px;text-align:center" :disabled="!settingStore.limitMode">分<input type="number" max="59" min="0" v-model="settingStore.limitSec" style="width:60px;text-align:center" :disabled="!settingStore.limitMode">秒に設定する</span>
             </div>
             <h3 class="mt-5">個別モード</h3>
-            <div class="mb-3"><button class="btn btn-outline-info py-2" style="width:250px" @click="goToIndividual">個別ストップウォッチ　》</button></div>
-            <div class="mb-3"><button class="btn btn-outline-info py-2" style="width:250px" @click="goToTimer">個別タイマー　》</button></div>
+            <div class="mb-3"><button class="btn btn-outline-info py-2" style="width:250px" @click="goToIndividualStopwatch">個別ストップウォッチ　》</button></div>
+            <div class="mb-3"><button class="btn btn-outline-info py-2" style="width:250px" @click="goToPersonalTimer">個別タイマー　》</button></div>
         </div>
     </div>
 </template>

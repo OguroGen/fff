@@ -1,12 +1,12 @@
 <script setup>
     import { computed } from 'vue'
     import { onBeforeRouteLeave,useRouter } from 'vue-router'
-    import { PlayersStore } from '@/stores/players'
+    import { usePlayersStore } from '@/stores/playersStore'
     import StopWatch from '@/components/StopWatch.vue'
 
     const synth = window.speechSynthesis;
     const router=useRouter()
-    const playersStore=PlayersStore()
+    const playersStore=usePlayersStore()
     const players=playersStore.players
 
     const pushSound = new Audio('./sounds/digital.mp3')
@@ -23,7 +23,7 @@
     })
 
     //プレイヤーのタイムを全て0に
-    players.forEach((e)=>e.time=0)
+    players.forEach((player)=>player.time=0)
 
     //タイムの計算
     const calculateTime=(i)=>{
@@ -33,7 +33,7 @@
 
     //キーが押された時
     const onKeyDown=(e)=>{
-        const i=players.findIndex((element)=>element.ck==e.code)
+        const i=players.findIndex((element)=>element.keyCode==e.code)
         if(i!=-1){
             if(players[i].isRunning){
                 stopTimer(i)
@@ -48,7 +48,7 @@
         players[i].time=0
         const vList=synth.getVoices()
         const utterName = new SpeechSynthesisUtterance(playersStore.players[i].name);
-        utterName.voice=vList.find(e=>e.lang=='ja-JP')
+        utterName.voice=vList.find(voice=>voice.lang=='ja-JP')
         synth.speak(utterName)
         utterName.onend=()=>{
             if(players[i].isRunning){
@@ -90,8 +90,8 @@
     //イベントリスナーの削除
     onBeforeRouteLeave((to, from) => {
         window.removeEventListener('keydown', onKeyDown)
-        timers.forEach((e)=>clearInterval(e))
-        yooiDelays.forEach((e)=>clearInterval(e))
+        timers.forEach((timer)=>clearInterval(timer))
+        yooiDelays.forEach((delay)=>clearTimeout(delay))
         playersStore.initialize()
     })
 </script>

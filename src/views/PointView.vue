@@ -1,9 +1,9 @@
 <script setup>
   import {ref} from 'vue'
-  import {PlayersStore} from '@/stores/players'
+  import {usePlayersStore} from '@/stores/playersStore'
   import { useRouter } from 'vue-router'
 
-  const playersStore=PlayersStore()
+  const playersStore=usePlayersStore()
   const router=useRouter()
 
   const inputShow=ref(false)
@@ -42,7 +42,7 @@
       </thead>
       <tbody class="text-center">
         <tr v-for="player in playersStore.players">
-          <th v-text="player.ck"></th>
+          <th v-text="player.keyCode"></th>
           <td class="text-start px-3" v-text="player.name"></td>
           <td><input type="number" max="9999" class="text-center" v-model="player.point">点</td>
         </tr>

@@ -8,7 +8,7 @@
   <div class="box">
     <div class="name" v-text="player.name"></div>
     <div class="time" v-text="player.time"></div>
-    <div class="text-end m-1" v-text="player.ck"></div>
+    <div class="text-end m-1" v-text="player.keyCode"></div>
   </div>
 </div>
 </template>

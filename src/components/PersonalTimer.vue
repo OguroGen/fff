@@ -26,7 +26,7 @@
       <div class="col-3 time" v-text="sec" v-if="player.isRunning"></div>
       <div class="col-1">秒</div>
     </div>  
-    <div class="text-end m-1" v-text="player.ck"></div>
+    <div class="text-end m-1" v-text="player.keyCode"></div>
   </div>
 </div>
 </template>

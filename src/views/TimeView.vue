@@ -1,13 +1,13 @@
 <script setup>
     import {ref,computed} from 'vue'
     import { onBeforeRouteLeave,useRouter } from 'vue-router'
-    import {PlayersStore} from '@/stores/players'
-    import {SettingStore} from '@/stores/setting'
+    import {usePlayersStore} from '@/stores/playersStore'
+    import {useSettingStore} from '@/stores/settingStore'
     import TimeDisplay from '@/components/TimeDisplay.vue'
     import PlayerTime from '@/components/PlayerTime.vue'
 
-    const playersStore=PlayersStore()
-    const settingStore=SettingStore()
+    const playersStore=usePlayersStore()
+    const settingStore=useSettingStore()
     const router=useRouter()
 
     const pushSound = new Audio('./sounds/digital.mp3')
@@ -67,10 +67,10 @@
             if(!silentMode)makeSound(hajimeSound);        
         },delayTime)
 
-        playersStore.players.forEach(e => {
-            e.isRunning=true;
-            e.time='_';
-            e.timeRank='_';
+        playersStore.players.forEach(player => {
+            player.isRunning=true;
+            player.time='_';
+            player.timeRank='_';
         });
 
         ranking = 1
@@ -107,7 +107,7 @@
     //キーが押された時
     const onKeyDown=(e)=>{
         if(displayTime){        
-            const i=playersStore.players.findIndex((element)=>element.ck==e.code)
+            const i=playersStore.players.findIndex((element)=>element.keyCode==e.code)
             if(i!=-1){stopPlayerTimer(i)}        
         } 
     }
