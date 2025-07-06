@@ -5,6 +5,31 @@ import packageJson from '../../package.json'
 // 標準的なCHANGELOG.mdに基づく更新履歴データ
 const changelog = [
   {
+    version: "1.0.0",
+    date: "2025-07-06",
+    title: "Ver 1.0.0リリース: 制限時間機能と○×方式ランキングの追加",
+    changes: {
+      added: [
+        "制限時間機能: TimeViewヘッダーに制限時間表示と自動停止",
+        "○×方式ランキング: SVGアイコンとアニメーション付きの新成績発表",
+        "入力方式選択: PointViewで点数入力/○×方式の選択機能",
+        "playersCorrectWrongRanked と playersTimeOrder ゲッター追加",
+        "プレイヤーストアに isCorrect プロパティ追加",
+        "設定ストアに inputMode プロパティ追加",
+        "/correct-wrong-ranking ルート追加"
+      ],
+      changed: [
+        "RankingView: モード別表示切り替え機能",
+        "PlayerTime と TimeDisplay コンポーネントのスタイル改善",
+        "package.json バージョンを1.0.0に更新"
+      ],
+      fixed: [
+        "プレイヤー状態管理の改善",
+        "ランキング表示の安定性向上"
+      ]
+    }
+  },
+  {
     version: "0.9.0",
     date: "2025-06-21",
     title: "更新履歴機能とバージョン管理システムの追加",
@@ -142,7 +167,7 @@ const getChangeLabel = (type) => {
         ⬅️ ホームに戻る
       </button>
       <h1 class="title">📋 更新履歴</h1>
-      <p class="subtitle">早押しクイズアプリの開発履歴</p>
+      <p class="subtitle">早押しアプリの開発履歴</p>
     </div>
 
     <!-- 更新履歴タイムライン -->

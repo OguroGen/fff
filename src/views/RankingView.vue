@@ -1,9 +1,12 @@
 <script setup>
-    import {ref,computed} from 'vue'
+    import {ref,computed,onMounted} from 'vue'
     import {usePlayersStore} from '@/stores/playersStore'
+    import {useSettingStore} from '@/stores/settingStore'
     import { useRouter } from 'vue-router'
+    import CorrectWrongRankingView from './CorrectWrongRankingView.vue'
 
     const playersStore=usePlayersStore()
+    const settingStore=useSettingStore()
     const router=useRouter()
     const nameFlag=ref(Array(10))
     const infoFlag=ref(Array(10))
@@ -52,7 +55,11 @@
 </script>
 
 <template>
-    <div class="wrap">
+    <!-- ○×方式の場合は専用コンポーネントを使用 -->
+    <CorrectWrongRankingView v-if="settingStore.inputMode === 'correctWrong'" />
+    
+    <!-- 点数入力方式の場合は従来の表示 -->
+    <div v-else class="wrap">
         <div v-for="(player,i) in playersStore.playersRanked">
             <span :class="i==0?'rank1':'rank'" v-text="i+1+'位'"></span>
             <transition name="name-show" @after-enter="infoShow(i)">

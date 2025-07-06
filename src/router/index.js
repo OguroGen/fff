@@ -30,6 +30,11 @@ const router = createRouter({
       component: () => import('../views/RankingView.vue')
     },
     {
+      path: '/correct-wrong-ranking',
+      name: 'correct-wrong-ranking',
+      component: () => import('../views/CorrectWrongRankingView.vue')
+    },
+    {
       path: '/stopwatch',
       name: 'stopwatch',
       component: () => import('../views/StopWatchView.vue')

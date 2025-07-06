@@ -14,23 +14,27 @@ git status
 
 echo.
 echo === Git Commit ===
-git commit -m "v0.9.0 完成: 標準的なバージョン管理とSPAルーティング修正
+git commit -m "v1.0.0: 制限時間機能と○×ランキング機能追加
 
-## 標準的な方式への移行
-- CHANGELOG.mdを標準形式で作成
-- package.jsonを唯一の真の情報源に変更
-- HomeView.vueでバージョンを動的取得
-- npm versionコマンド対応のスクリプト追加
+■ 主要機能追加 (2件)
+1️⃣ TimeViewにおいて制限時間を追加
+2️⃣ RankingViewを別の形式のページも作る（○×方式）
 
-## SPAルーティング問題の修正
-- vite.config.jsにhistoryApiFallback追加
-- 本番環境用.htaccessファイル作成
-- Vercel用vercel.json設定ファイル作成
-- URL直接アクセス時の404エラーを解決
+■ 新規ファイル (1件)
+src/views/CorrectWrongRankingView.vue
 
-## ファイル構成変更
-- src/data/changelog.js → 削除（標準形式に移行）
-- 更新履歴管理を業界標準の方式に統一"
+■ 変更ファイル (11件)
+package.json - version: 0.9.0 -> 1.0.0
+src/views/TimeView.vue - 制限時間機能追加
+src/components/TimeDisplay.vue - 制限時間コンポーネント
+src/components/PlayerTime.vue - プレイヤー時間表示
+src/views/RankingView.vue - 既存ランキング調整
+src/router/index.js - /correct-wrong-ranking ルート追加
+src/stores/playersStore.js - playersCorrectWrongRanked ゲッター
+src/stores/settingStore.js - inputMode プロパティ
+src/views/PointView.vue - 入力方式分岐ナビゲーション
+src/views/ChangelogView.vue - 更新履歴表示改善
+git_commit_push_v2.bat - コミットメッセージ更新"
 
 echo.
 echo === Git Push ===

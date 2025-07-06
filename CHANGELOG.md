@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2025-07-06
+
+### Added
+- **制限時間機能の追加**
+  - `src/views/TimeView.vue`: 制限時間表示をヘッダーに追加
+  - 制限時間モード時の「制限時間○分○秒」表示
+  - 制限時間到達時の自動停止機能
+- **○×方式ランキング機能の実装**
+  - 新規ファイル: `src/views/CorrectWrongRankingView.vue`
+  - SVGアイコンによる正誤表示（○×）
+  - 下位から順番の正誤発表アニメーション
+  - ズームアニメーション付きの最終順位発表
+  - 2-10人対応のレスポンシブデザイン
+  - 不正解者の順位非表示機能
+- **点数入力方式の拡張**
+  - `src/views/PointView.vue`: 入力方式選択機能（点数入力/○×方式）
+  - ○×方式用の正誤入力UI
+  - 入力方式に応じたナビゲーション分岐
+- **ストア機能の拡張**
+  - `src/stores/playersStore.js`: `playersCorrectWrongRanked` ゲッター追加
+  - `src/stores/playersStore.js`: `playersTimeOrder` ゲッター追加  
+  - `src/stores/playersStore.js`: `isCorrect` プロパティ追加
+  - `src/stores/settingStore.js`: `inputMode` プロパティ追加 ('point'/'correctWrong')
+- **ルーティング機能の追加**
+  - `src/router/index.js`: `/correct-wrong-ranking` ルート追加
+
+### Changed
+- `package.json`: version 0.9.0 → 1.0.0
+- `src/views/RankingView.vue`: 入力モードに応じた表示切り替え機能
+- `src/components/PlayerTime.vue`: スタイル調整とアニメーション改善
+- `src/components/TimeDisplay.vue`: 表示スタイルの改善
+
+### Fixed
+- プレイヤー状態管理の改善
+- ランキング表示の安定性向上
+
 ## [0.9.0] - 2025-06-21
 
 ### Added
@@ -71,6 +107,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 成績発表機能
 - ストップウォッチ機能
 
+[1.0.0]: https://github.com/OguroGen/fff/compare/v0.9.0...v1.0.0
 [0.9.0]: https://github.com/OguroGen/fff/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/OguroGen/fff/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/OguroGen/fff/compare/v0.6.0...v0.7.0

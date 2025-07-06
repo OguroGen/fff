@@ -24,7 +24,7 @@
     const limitMin=ref(settingStore.limitMin);
     const limitSec=ref(settingStore.limitSec);
 
-    let startTime,displayTime,yooiDelay,lastTime,ranking
+    let startTime,displayTime,yooiDelay,lastTime,limitTime,ranking
 
     //ユーザー数が６人以上の場合は二列にする
     const playersCol=computed(()=>{
@@ -64,7 +64,16 @@
             displayTime = setInterval(() => {                   
                 time.value = calculateTime()
             },5)
-            if(!silentMode)makeSound(hajimeSound);        
+            if(!silentMode)makeSound(hajimeSound);
+            
+            // 制限時間設定
+            if(limitMode.value){
+                const totalLimitSeconds = limitMin.value * 60 + limitSec.value
+                limitTime = setTimeout(() => {
+                    if(!silentMode) makeSound(yameSound)
+                    stopTimer()
+                }, totalLimitSeconds * 1000)
+            }
         },delayTime)
 
         playersStore.players.forEach(player => {
@@ -93,6 +102,7 @@
         clearTimeout(yooiDelay)
         clearInterval(displayTime)
         clearInterval(lastTime)
+        clearTimeout(limitTime)
         displayTime=false
         time.value='終了';
         settingStore.startButtonCaption='RESET'
@@ -184,12 +194,12 @@
 <template>
     <header class="row">
         <button class="btn btn-outline-info col-2" @click="prev" :disabled="settingStore.startButtonCaption=='STOP'">《　選手情報</button>
-        <div class="col-8">
+        <div class="text-center col-8">
             <div class="limitTime" v-if="limitMode">制限時間{{ limitMin }}分{{ limitSec }}秒</div>
         </div>
         <button class="btn btn-outline-info col-2" @click="next" :disabled="settingStore.startButtonCaption=='STOP'">得点入力　》</button>
     </header>
-    
+
     <TimeDisplay :time="time" />
     <div :class="playersCol">
         <PlayerTime :player="player" v-for="player in playersStore.players"/>
@@ -204,10 +214,24 @@
         margin-top:30px;
     }
 
+    header .btn {
+        min-height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .limitTime{
         text-align: center;
         font-size: 1.6rem;
-        color: brown;
+        color: #d2691e;
+        font-family: 'RocknRoll One', sans-serif;
+        font-weight: bold;
+        background-color: transparent;
+        border-bottom: 3px solid #ffa07a;
+        padding: 0;
+        margin: -10px auto 0;
+        display: inline-block;
     }
 
 </style>
