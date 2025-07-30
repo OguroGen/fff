@@ -1,10 +1,28 @@
 <script setup>
+    import {watch} from 'vue'
     import {usePlayersStore} from '@/stores/playersStore'
     import {useSettingStore} from '@/stores/settingStore'
     import { useRouter } from 'vue-router'
     const playersStore=usePlayersStore()
     const settingStore=useSettingStore()
     const router=useRouter()
+
+    // silentModeとdelayTimeModeの排他制御
+    watch(() => settingStore.silentMode, (newValue) => {
+        if (newValue) {
+            settingStore.delayTimeMode = false
+            settingStore.delayTime = 1.6
+        }
+    })
+
+    watch(() => settingStore.delayTimeMode, (newValue) => {
+        if (newValue) {
+            settingStore.silentMode = false
+        } else {
+            // delayTimeModeをオフにしたときにdelayTimeを1.6に戻す
+            settingStore.delayTime = 1.6
+        }
+    })
 
     //次のページへ
     const next=()=>{
@@ -75,6 +93,10 @@
             <div class="form-check form-switch">
                 <input type="checkbox" class="form-check-input" role="switch" v-model="settingStore.limitMode">
                 <span class="ms-3" :class="{light:!settingStore.limitMode}">制限時間を<input type="number" min="0" v-model="settingStore.limitMin" style="width:60px;text-align:center" :disabled="!settingStore.limitMode">分<input type="number" max="59" min="0" v-model="settingStore.limitSec" style="width:60px;text-align:center" :disabled="!settingStore.limitMode">秒に設定する</span>
+            </div>
+            <div class="form-check form-switch">
+                <input type="checkbox" class="form-check-input" role="switch" v-model="settingStore.delayTimeMode">
+                <span class="ms-3" :class="{light:!settingStore.delayTimeMode}">計時は「よーいの<input type="number" v-model="settingStore.delayTime" step="0.1" style="width:80px;text-align:center" :disabled="!settingStore.delayTimeMode" min="0">秒後から」に変更する</span>
             </div>
             <h3 class="mt-5">個別モード</h3>
             <div class="mb-3"><button class="btn btn-outline-info py-2" style="width:250px" @click="goToIndividualStopwatch">個別ストップウォッチ　》</button></div>

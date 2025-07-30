@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2025-07-30
+
+### Added
+- **計時開始タイミング調整機能**
+  - `src/stores/settingStore.js`: `delayTimeMode` と `delayTime` プロパティ追加
+  - `src/views/PlayersView.vue`: 計時タイミング設定オプションを追加
+  - `src/views/TimeView.vue`: delayTimeModeに対応した計時ロジック実装
+  - 「よーい」の指定秒数後から計時開始する機能（0.1秒単位で調整可能）
+- **設定項目の排他制御機能**
+  - silentModeとdelayTimeModeの同時選択を防ぐ排他制御
+  - delayTimeModeオフ時の自動リセット機能（delayTimeを1.6秒に戻す）
+
+### Changed
+- `src/views/PlayersView.vue`: Vue Composition APIのwatch機能を活用した設定項目の相互制御
+- 競技クイズの公平性向上のための計時精度改善
+
+### Technical Details
+- より精密なタイミング制御により会場環境に合わせた調整が可能
+- 競技者の反応時間を考慮した柔軟な設定システム
+
 ## [1.0.0] - 2025-07-06
 
 ### Added
@@ -107,6 +127,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 成績発表機能
 - ストップウォッチ機能
 
+[1.1.0]: https://github.com/OguroGen/fff/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/OguroGen/fff/compare/v0.9.0...v1.0.0
 [0.9.0]: https://github.com/OguroGen/fff/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/OguroGen/fff/compare/v0.7.0...v0.8.0

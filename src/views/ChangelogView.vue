@@ -5,6 +5,26 @@ import packageJson from '../../package.json'
 // 標準的なCHANGELOG.mdに基づく更新履歴データ
 const changelog = [
   {
+    version: "1.1.0",
+    date: "2025-07-30",
+    title: "Ver 1.1.0リリース: 計時開始タイミング調整機能の追加",
+    changes: {
+      added: [
+        "計時開始タイミング調整機能: よーいの指定秒数後から計時開始（0.1秒単位調整）",
+        "設定項目の排他制御: silentModeとdelayTimeModeの同時選択防止",
+        "自動リセット機能: delayTimeModeオフ時にdelayTimeを1.6秒に戻す",
+        "settingStoreに delayTimeMode と delayTime プロパティ追加",
+        "PlayersViewに計時タイミング設定オプション追加",
+        "TimeViewにdelayTimeMode対応の計時ロジック実装"
+      ],
+      changed: [
+        "PlayersView: Vue Composition APIのwatch機能による設定項目相互制御",
+        "競技クイズの公平性向上のための計時精度改善",
+        "会場環境に合わせた柔軟なタイミング調整システム"
+      ]
+    }
+  },
+  {
     version: "1.0.0",
     date: "2025-07-06",
     title: "Ver 1.0.0リリース: 制限時間機能と○×方式ランキングの追加",

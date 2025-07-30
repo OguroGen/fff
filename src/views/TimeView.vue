@@ -24,7 +24,9 @@
     const limitMin=ref(settingStore.limitMin);
     const limitSec=ref(settingStore.limitSec);
 
-    let startTime,displayTime,yooiDelay,lastTime,limitTime,ranking
+    let delayTime=settingStore.delayTime*1000;
+
+    let startTime,displayTime,yooiDelay,hajimeDelay,lastTime,limitTime,ranking
 
     //ユーザー数が６人以上の場合は二列にする
     const playersCol=computed(()=>{
@@ -51,12 +53,12 @@
     startButton.value.blur()
 
     if(settingStore.startButtonCaption=='START'){      //スタート処理
-        let delayTime=0
 
-        if(!silentMode){
+        if(silentMode){
+            delayTime=0;
+        }else{
             makeSound(yooiSound);
             time.value='よーい';
-            delayTime=1600;
         }
         
         yooiDelay=setTimeout(()=>{
@@ -64,8 +66,7 @@
             displayTime = setInterval(() => {                   
                 time.value = calculateTime()
             },5)
-            if(!silentMode)makeSound(hajimeSound);
-            
+        
             // 制限時間設定
             if(limitMode.value){
                 const totalLimitSeconds = limitMin.value * 60 + limitSec.value
@@ -75,6 +76,12 @@
                 }, totalLimitSeconds * 1000)
             }
         },delayTime)
+
+        if(!silentMode) {
+            hajimeDelay=setTimeout(()=>{
+                makeSound(hajimeSound);
+            },Math.max(delayTime, 800))
+        }
 
         playersStore.players.forEach(player => {
             player.isRunning=true;
@@ -100,6 +107,7 @@
     //ストップ
     const stopTimer=()=>{
         clearTimeout(yooiDelay)
+        clearTimeout(hajimeDelay)
         clearInterval(displayTime)
         clearInterval(lastTime)
         clearTimeout(limitTime)

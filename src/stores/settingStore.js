@@ -9,7 +9,9 @@ export const useSettingStore = defineStore('SettingStore',{
     limitMode:false,
     limitMin:1,
     limitSec:0,
-    inputMode:'point' // 'point' or 'correctWrong'
+    inputMode:'point', // 'point' or 'correctWrong'
+    delayTimeMode:false,
+    delayTime:1.6
   }),
   getters: {
   },
