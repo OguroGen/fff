@@ -11,7 +11,10 @@ export const useSettingStore = defineStore('SettingStore',{
     limitSec:0,
     inputMode:'point', // 'point' or 'correctWrong'
     delayTimeMode:false,
-    delayTime:1.6
+    delayTime:1.6,
+    showTournamentName:false,
+    tournamentName:'',
+    tournamentNameFontSize:48
   }),
   getters: {
   },

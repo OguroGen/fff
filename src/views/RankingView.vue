@@ -81,6 +81,9 @@
             <button class="btn btn-outline-primary btn-lg col-2 offset-3" @click="nextRankShow">次を表示</button>
             <button class="btn btn-outline-danger col-2 offset-3" @click="next">選手情報</button>
         </div>
+        <div v-if="settingStore.showTournamentName" class="tournament-name" :style="{fontSize: settingStore.tournamentNameFontSize + 'px'}">
+            {{settingStore.tournamentName}}
+        </div>
     </div>
 </template>
 
@@ -198,5 +201,11 @@
 
     .info-show-enter-to{
         opacity: 1;
+    }
+    .tournament-name{
+        text-align: center;
+        margin-top: 20px;
+        font-weight: bold;
+        color: lightcyan;
     }
 </style>

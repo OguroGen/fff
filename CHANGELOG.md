@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2025-01-12
+
+### Added
+- **大会名表示機能**
+  - `src/stores/settingStore.js`: `showTournamentName`, `tournamentName`, `tournamentNameFontSize` プロパティ追加
+  - `src/views/PlayersView.vue`: 大会名表示オプションを追加（チェックボックス、入力欄、フォントサイズ設定）
+  - `src/views/TimeView.vue`: スタートボタン下部に大会名を表示
+  - `src/views/RankingView.vue`: ボタンエリア下部に大会名を表示
+  - フォントサイズを30px～150pxの範囲で指定可能（デフォルト: 48px）
+
+### Changed
+- `src/views/TimeView.vue`: 大会名の文字色を視認性の良い色（#2c3e50）に改善
+- 大会名表示機能により、大会の識別が容易に
+
 ## [1.1.0] - 2025-07-30
 
 ### Added
@@ -127,6 +141,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 成績発表機能
 - ストップウォッチ機能
 
+[1.1.1]: https://github.com/OguroGen/fff/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/OguroGen/fff/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/OguroGen/fff/compare/v0.9.0...v1.0.0
 [0.9.0]: https://github.com/OguroGen/fff/compare/v0.8.0...v0.9.0

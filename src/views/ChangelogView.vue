@@ -5,6 +5,25 @@ import packageJson from '../../package.json'
 // 標準的なCHANGELOG.mdに基づく更新履歴データ
 const changelog = [
   {
+    version: "1.1.1",
+    date: "2025-01-12",
+    title: "Ver 1.1.1リリース: 大会名表示機能の追加",
+    changes: {
+      added: [
+        "大会名表示機能: TimeViewとRankingViewに大会名を表示",
+        "フォントサイズ調整: 30px～150pxの範囲で指定可能（デフォルト: 48px）",
+        "settingStoreに showTournamentName, tournamentName, tournamentNameFontSize プロパティ追加",
+        "PlayersViewに大会名表示オプション追加（チェックボックス、入力欄、フォントサイズ設定）",
+        "TimeViewのスタートボタン下部に大会名を表示",
+        "RankingViewのボタンエリア下部に大会名を表示"
+      ],
+      changed: [
+        "TimeView: 大会名の文字色を視認性の良い色（#2c3e50）に改善",
+        "大会名表示機能により、大会の識別が容易に"
+      ]
+    }
+  },
+  {
     version: "1.1.0",
     date: "2025-07-30",
     title: "Ver 1.1.0リリース: 計時開始タイミング調整機能の追加",

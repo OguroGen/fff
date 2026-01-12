@@ -98,6 +98,10 @@
                 <input type="checkbox" class="form-check-input" role="switch" v-model="settingStore.delayTimeMode">
                 <span class="ms-3" :class="{light:!settingStore.delayTimeMode}">計時は「よーいの<input type="number" v-model="settingStore.delayTime" step="0.1" style="width:80px;text-align:center" :disabled="!settingStore.delayTimeMode" min="0">秒後から」に変更する</span>
             </div>
+            <div class="form-check form-switch">
+                <input type="checkbox" class="form-check-input" role="switch" v-model="settingStore.showTournamentName">
+                <span class="ms-3" :class="{light:!settingStore.showTournamentName}">大会名を表示する<input type="text" v-model="settingStore.tournamentName" maxlength="20" style="width:200px;text-align:center;margin-left:10px" :disabled="!settingStore.showTournamentName" placeholder="大会名">フォントサイズ<input type="number" v-model="settingStore.tournamentNameFontSize" min="30" max="150" style="width:60px;text-align:center;margin-left:10px" :disabled="!settingStore.showTournamentName">px</span>
+            </div>
             <h3 class="mt-5">個別モード</h3>
             <div class="mb-3"><button class="btn btn-outline-info py-2" style="width:250px" @click="goToIndividualStopwatch">個別ストップウォッチ　》</button></div>
             <div class="mb-3"><button class="btn btn-outline-info py-2" style="width:250px" @click="goToPersonalTimer">個別タイマー　》</button></div>
