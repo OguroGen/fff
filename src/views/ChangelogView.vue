@@ -5,6 +5,19 @@ import packageJson from '../../package.json'
 // 標準的なCHANGELOG.mdに基づく更新履歴データ
 const changelog = [
   {
+    version: "1.1.2",
+    date: "2026-08-15",
+    title: "Ver 1.1.2リリース: Ver 2.0 ベータ案内の追加",
+    changes: {
+      added: [
+        "ホーム画面に Ver 2.0 ベータ版への簡易案内とリンクを追加"
+      ],
+      changed: [
+        "安定版から試用環境（Vercel）へ誘導し、新機能を試しやすく"
+      ]
+    }
+  },
+  {
     version: "1.1.1",
     date: "2025-01-12",
     title: "Ver 1.1.1リリース: 大会名表示機能の追加",
