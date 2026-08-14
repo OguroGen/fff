@@ -3,6 +3,7 @@ import { ref, computed } from "vue";
 import { onBeforeRouteLeave, useRouter } from "vue-router";
 import { usePlayersStore } from "@/stores/playersStore";
 import { useSettingStore } from "@/stores/settingStore";
+import { usePlayerCardRows } from "@/composables/usePlayerCardRows";
 import TimeDisplay from "@/components/TimeDisplay.vue";
 import PlayerTime from "@/components/PlayerTime.vue";
 
@@ -34,10 +35,11 @@ let startTime,
   limitTime,
   ranking;
 
-//ユーザー数が６人以上の場合は二列にする
-const playersCol = computed(() => {
-  return playersStore.players.length > 5 ? "row row-cols-5" : "row";
-});
+const cardsRoot = ref(null);
+const { topRow, bottomRow, isTwoRows, cardSlots } = usePlayerCardRows(
+  () => playersStore.players,
+  cardsRoot
+);
 
 //スタートボタンの見た目を変更
 const startButtonClass = computed(() => {
@@ -240,8 +242,25 @@ onBeforeRouteLeave((to, from) => {
   </header>
 
   <TimeDisplay :time="time" />
-  <div :class="playersCol">
-    <PlayerTime :player="player" v-for="player in playersStore.players" />
+  <div
+    ref="cardsRoot"
+    class="player-cards"
+    :style="{ '--card-slots': cardSlots }"
+  >
+    <div class="player-row">
+      <PlayerTime
+        v-for="player in topRow"
+        :key="player.keyCode"
+        :player="player"
+      />
+    </div>
+    <div v-if="isTwoRows" class="player-row">
+      <PlayerTime
+        v-for="player in bottomRow"
+        :key="player.keyCode"
+        :player="player"
+      />
+    </div>
   </div>
   <button
     id="startButton"
@@ -293,5 +312,22 @@ header .btn {
   margin-top: 20px;
   font-weight: bold;
   color: #2c3e50;
+}
+
+.player-cards {
+  width: 100%;
+}
+
+.player-row {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.player-row > * {
+  flex: 0 0 calc(100% / var(--card-slots));
+  max-width: calc(100% / var(--card-slots));
+  min-width: 0;
 }
 </style>

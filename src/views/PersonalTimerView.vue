@@ -1,7 +1,8 @@
 <script setup>
-    import { computed } from 'vue'
+    import { ref } from 'vue'
     import { onBeforeRouteLeave,useRouter } from 'vue-router'
     import { usePlayersStore } from '@/stores/playersStore'
+    import { usePlayerCardRows } from '@/composables/usePlayerCardRows'
     import PersonalTimer from '@/components/PersonalTimer.vue'
 
     const synth = window.speechSynthesis
@@ -20,10 +21,11 @@
     const yooiDelays=[]
     let limitTimes=[]
 
-    //ユーザー数が5人以上の場合は二列にする
-    const playersCol=computed(()=>{
-        return playersStore.players.length>5 ? 'row row-cols-5':'row';
-    })
+    const cardsRoot = ref(null)
+    const { topRow, bottomRow, isTwoRows, cardSlots } = usePlayerCardRows(
+        () => playersStore.players,
+        cardsRoot
+    )
 
     //タイムの計算
     const calculateTime=(i)=>{
@@ -120,11 +122,33 @@
         <button class="btn btn-outline-info col-2" @click="prev">《　選手情報</button>
     </header>
     <h2>個別タイマー</h2>
-    <div :class="playersCol">
-        <PersonalTimer :player="player" v-for="player in players"/>
+    <div
+        ref="cardsRoot"
+        class="player-cards"
+        :style="{ '--card-slots': cardSlots }"
+    >
+        <div class="player-row">
+            <PersonalTimer v-for="player in topRow" :key="player.keyCode" :player="player" />
+        </div>
+        <div v-if="isTwoRows" class="player-row">
+            <PersonalTimer v-for="player in bottomRow" :key="player.keyCode" :player="player" />
+        </div>
     </div>
 </template>
 
 <style scoped>
-
+.player-cards {
+    width: 100%;
+}
+.player-row {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
+}
+.player-row > * {
+    flex: 0 0 calc(100% / var(--card-slots));
+    max-width: calc(100% / var(--card-slots));
+    min-width: 0;
+}
 </style>
