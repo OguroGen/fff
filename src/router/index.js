@@ -43,6 +43,11 @@ const router = createRouter({
       path: '/personaltimer',
       name: 'personaltimer',
       component: () => import('../views/PersonalTimerView.vue')
+    },
+    {
+      path: '/mini-tournament',
+      name: 'mini-tournament',
+      component: () => import('../views/MiniTournamentView.vue')
     }
   ]
 })

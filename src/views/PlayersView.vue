@@ -1,11 +1,26 @@
 <script setup>
-    import {watch} from 'vue'
+    import { computed, watch } from 'vue'
     import {usePlayersStore} from '@/stores/playersStore'
     import {useSettingStore} from '@/stores/settingStore'
     import { useRouter } from 'vue-router'
     const playersStore=usePlayersStore()
     const settingStore=useSettingStore()
     const router=useRouter()
+
+    const MODE_NEXT = {
+        buzzer: { path: '/time', label: '時間計測　》' },
+        mini: { path: '/mini-tournament', label: 'ミニ大会　》' },
+        stopwatch: { path: '/stopwatch', label: 'ストップウォッチ　》' },
+        timer: { path: '/personaltimer', label: 'タイマー　》' }
+    }
+
+    const nextMeta = computed(() => MODE_NEXT[settingStore.appMode] || MODE_NEXT.buzzer)
+    const showTournamentOptions = computed(() => {
+        return settingStore.appMode === 'buzzer' || settingStore.appMode === 'mini'
+    })
+    const showTournamentNameOption = computed(() => {
+        return settingStore.appMode === 'buzzer'
+    })
 
     // silentModeとdelayTimeModeの排他制御
     watch(() => settingStore.silentMode, (newValue) => {
@@ -24,26 +39,22 @@
         }
     })
 
-    //次のページへ
-    const next=()=>{
-        router.push('/time')
+    const home = () => {
+        router.push('/')
     }
 
-    //個別ストップウォッチへ
-    const goToIndividualStopwatch=()=>{
-        playersStore.initialize()
-        router.push('/stopwatch')
-    }
-
-    //個別タイマーへ
-    const goToPersonalTimer=()=>{
-        router.push('/personaltimer')
+    const next = () => {
+        if (settingStore.appMode === 'stopwatch') {
+            playersStore.initialize()
+        }
+        router.push(nextMeta.value.path)
     }
 </script>
 
 <template>
     <header class="row">
-        <button class="btn btn-outline-info col-2 offset-10" @click="next">時間計測　》</button>
+        <button class="btn btn-outline-info col-2" @click="home">《　ホーム</button>
+        <button class="btn btn-outline-info col-2 offset-8" @click="next">{{ nextMeta.label }}</button>
     </header>
     <h2>選手情報</h2>
     <div class="row">
@@ -80,7 +91,7 @@
                 所　属：６文字以内　（任意）
             </p>
         </div>
-        <div class="col option">
+        <div class="col option" v-if="showTournamentOptions">
             <h3>オプション</h3>
             <div class="form-check form-switch">
                 <input type="checkbox" class="form-check-input" role="switch" v-model="settingStore.lastPlayerCountdown">
@@ -98,13 +109,10 @@
                 <input type="checkbox" class="form-check-input" role="switch" v-model="settingStore.delayTimeMode">
                 <span class="ms-3" :class="{light:!settingStore.delayTimeMode}">計時は「よーいの<input type="number" v-model="settingStore.delayTime" step="0.1" style="width:80px;text-align:center" :disabled="!settingStore.delayTimeMode" min="0">秒後から」に変更する</span>
             </div>
-            <div class="form-check form-switch">
+            <div class="form-check form-switch" v-if="showTournamentNameOption">
                 <input type="checkbox" class="form-check-input" role="switch" v-model="settingStore.showTournamentName">
                 <span class="ms-3" :class="{light:!settingStore.showTournamentName}">大会名を表示する<input type="text" v-model="settingStore.tournamentName" maxlength="20" style="width:200px;text-align:center;margin-left:10px" :disabled="!settingStore.showTournamentName" placeholder="大会名">フォントサイズ<input type="number" v-model="settingStore.tournamentNameFontSize" min="30" max="150" style="width:60px;text-align:center;margin-left:10px" :disabled="!settingStore.showTournamentName">px</span>
             </div>
-            <h3 class="mt-5">個別モード</h3>
-            <div class="mb-3"><button class="btn btn-outline-info py-2" style="width:250px" @click="goToIndividualStopwatch">個別ストップウォッチ　》</button></div>
-            <div class="mb-3"><button class="btn btn-outline-info py-2" style="width:250px" @click="goToPersonalTimer">個別タイマー　》</button></div>
         </div>
     </div>
 </template>

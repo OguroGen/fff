@@ -14,7 +14,8 @@ export const useSettingStore = defineStore('SettingStore',{
     delayTime:1.6,
     showTournamentName:false,
     tournamentName:'',
-    tournamentNameFontSize:48
+    tournamentNameFontSize:48,
+    appMode:'buzzer' // buzzer | mini | stopwatch | timer
   }),
   getters: {
   },

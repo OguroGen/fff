@@ -1,7 +1,15 @@
 <script setup>
   import { computed } from 'vue'
-  
-  const props=defineProps(['player'])
+
+  const props = defineProps({
+    player: { type: Object, required: true },
+    compact: { type: Boolean, default: false }
+  })
+
+  const hasRank = computed(() => {
+    const tr = props.player.timeRank
+    return tr >= 1 && tr <= 10
+  })
 
   const rankText=computed(() =>{
     let tr=props.player.timeRank
@@ -14,12 +22,12 @@
 </script>
 
 <template>
-  <div class="wrap col p-2 text-center">
+  <div class="wrap text-center" :class="compact ? 'compact' : 'col p-2'">
     <div class="box">
       <div class="name" v-text="player.name"></div>
       <div class="time" v-text="player.time" :class="{lastPlayer:player.isLastPlayer}"></div>
-      <div class="rank" v-text="rankText" :class="{lastPlayer:player.isLastPlayer}"></div>
-      <div class="keycode" v-text="player.keyCode"></div>
+      <div class="rank" v-if="!compact || hasRank" v-text="rankText" :class="{lastPlayer:player.isLastPlayer}"></div>
+      <div class="keycode" v-if="!compact" v-text="player.keyCode"></div>
     </div>
   </div>
 </template>
@@ -56,6 +64,33 @@
     margin: 5px;
     font-size: 0.9rem;
     color: #87ceeb;
+  }
+  .compact {
+    padding: 2px 4px !important;
+    width: 100%;
+  }
+  .compact .box {
+    border-width: 4px;
+    border-radius: 8px;
+    box-shadow: none;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .compact .name {
+    font-size: 1rem;
+    margin: 1px 0;
+  }
+  .compact .time {
+    font-size: 1.3rem;
+    margin: 1px 0;
+  }
+  .compact .rank {
+    font-size: 0.85rem;
+    margin: 0;
+  }
+  .compact .keycode {
+    margin: 0 4px 2px;
+    font-size: 0.7rem;
   }
   .lastPlayer {
     background-color: #ffe4e1 !important;
